@@ -1,0 +1,330 @@
+2014-03-19:
+Marek T. vs Kuba M.       3:1
+Dawid S. vs Maciej C.     2:2
+Pawel R. vs Mikolaj K.    3:1
+Dawid S. vs Sebastian Z.  1:3
+Kuba M. vs David C.       1:3
+Maciej C. vs Mateusz N.   1:3
+
+2014-03-27:
+Mateusz N. vs Jan S.      2:2
+Pawel R. vs Kuba M.       3:1
+Sebastian Z. vs Maciej C. 2:2
+Mikolaj K. vs Mateusz K.  1:3
+Marek T. vs David C.      2:2
+Pawel R. vs Mateusz K.    1:3
+Sebastian Z. vs David C.  1:2
+Mateusz N. vs Marek T.    2:2
+Mikolaj K. vs Kuba M.     1:2
+Mateusz K. vs Jan S.      3:1
+Pawel R. vs David C.      3:1
+Mateusz N. vs Kuba M.     2:2
+Sebastian Z. vs Marek T.  1:3
+
+2014-04-03:
+Mateusz K. vs Dawid S. 3:1
+Pawel R. vs Dawid S. 3:1
+Mateusz K. vs Kuba M. 3:1
+Michal R. vs Marek T. 2:2
+Jan S. vs Pawel R. 2:2
+Mateusz K. vs David C. 3:1
+Mateusz N. vs Michal R. 3:1
+Jan S. vs Marek T. 2:2
+Mateusz K. vs Mateusz N. 3:1
+
+2014-04-10:
+Marek T. vs Mateusz K. 2:2
+Kuba M. vs Sebastian Z. 1:2
+Maciej C. vs Michal R. 2:2
+Mateusz N. vs Sebastian S. 3:1
+Pawel R. vs Marek T. 1:3
+David C. vs Jan S. 2:2
+Mateusz N. vs Marek T. 2:2
+Mateusz K. vs Jan S. 1:2
+David C. vs Michal R. 3:1
+Sebastian S. vs Sebastian Z. 1:3
+Kuba M. vs Pawel R. 2:2
+Marek T. vs David C. 2:2
+Mateusz N. vs Sebastian Z. 3:1
+Mateusz K. vs Maciej C. 2:2
+Kuba M. vs Michal R. 1:2
+Pawel R. vs Sebastian S. 3:1
+
+2014-04-16:
+David C. vs Dawid S. 2:2
+  GRNDL < Gabe
+  Reina > HB:ST
+David C. vs Mateusz K. 1:3
+  GRNDL < Andy
+  Reina < NBN:MN
+Sebastian S. vs Pawel R. 1:3
+  Andy < HB:EtF
+  HB:ND < Reina
+Marek T. vs Mateusz K. 1:3
+  HB:EtF < Andy
+  Kate < NBN:MN
+Marek T. vs Sebastian Z. 3:1
+  HB:EtF > Kate
+  Kate > J:RP
+Sebastian S. vs Mateusz K. 1:3
+  HB:ND < Andy
+  Gabe < NBN:MN
+Jan S. vs Dawid S. 3:1 (rozegrane na chronosie)
+  Gabe > NBN:MN
+  NBN:MN > Gabe
+
+2014-04-24:
+David C. vs Pawel R. 1:3
+  J:RP < Kate
+  Reina < HB:EtF
+Kuba M. vs Maciej C. 3:1
+  Gabe > W:BaBW
+  NBN:MN > Whizzard
+Maciej C. vs Marek T. 2:2
+  W:BaBW > CT
+  Whizzard < NBN:MN
+Maciej C. vs Mikolaj K. 2:2
+  W:BaBW > Noise
+  Whizzard < GRNDL
+Michal R. vs Mateusz K. 1:3
+  J:RP < Andy
+  CT < NBN:MN
+Jan S. vs Kuba M. 3:1
+  NBN:MN > Gabe
+  Gabe > NBN:MN
+Michal R. vs Kuba M. 1:2
+  J:RP < Gabe
+  Kit = NBN:MN (time: 5:5)
+Michal R. vs David C. 1:2
+  Kit < J:RP
+  J:RP = Reina (time: 4:6)
+
+2014-04-30:
+Mikolaj K. vs Sebastian Z. 1:3
+  GRNDL < CT
+  Noise < HB:CI
+David C. vs Sebastian Z. 2:2
+  NBN:MN > CT
+  Whizzard < HB:CI
+David C. vs Maciej C. 2:2
+  NBN:MN > Reina
+  Whizzard < HB:CI
+Marek T. vs Dawid S. 2:2
+  NBN:MN < Kate
+  CT > HB:EtF
+Marek T. vs Maciej C. 2:2
+  NBN:MN > Reina
+  CT < HB:CI
+Mateusz N. vs Jan S. 3:1
+  Andy > NBN:MN
+  J:PE > Kate
+
+2014-05-08:
+David C. vs Jan S. 2:2
+  NBN:TWiY > Kate
+  Kit < NBN:MN
+Jan S. vs Maciej C. 2:2
+  NBN:MN > Ken
+  Kate < HB:CI
+Maciej C. vs Kuba M. 1:3
+  HB:CI < Gabe
+  Ken < HB:CI
+Dawid S. vs Pawel R. 1:3
+  NBN:MN < CT
+  Kate < J:HM
+Mateusz N. vs Dawid S. 1:3
+  J:PE < Kate
+  Kate < NBN:MN
+Marek T. vs Kuba M. 2:2
+  Ken > HB:CI
+  J:HM < Gabe
+Mateusz N. vs Sebastian Z. 1:2
+  Kate < HB:CI
+  W:BaBW = CT (time)
+Sebastian Z. vs Mateusz K. 1:3
+  HB:CI < Andy
+  CT < NBN:MN
+Dawid S. vs David C. 2:1
+  Kate > NBN:TWiY
+  NBN:MN = Kit (time)
+Mateusz N. vs Sebastian S. 3:1
+  W:BaBW > Andy
+  Kate > GRNDL
+Maciej C. vs Sebastian S. 3:1
+  Ken > GRNDL
+  HB:CI > Andy
+Mateusz N. vs David C. 1:3
+  Kate < NBN:TWiY
+  W:BaBW < Silhouette
+Dawid S. vs Jan S. 1:3
+  Silhouette < NBN:MN
+  NBN:MN < Kate
+
+2014-05-14:
+Mikolaj K. vs Mateusz K. 2:2
+  GRNDL < Silhouette
+  Noise > J:TI
+Kuba M. vs Mateusz N. 2:2
+  NBN:MN > Ken
+  Silhouette < NBN:MN
+Pawel R. vs Mateusz N. 1:3
+  CT < NBN:MN
+  NBN:TWiY < Ken
+Sebastian S. vs Mateusz K. 1:3
+  Andy < J:TI
+  GRNDL < Silhouette
+Kuba M. vs Mateusz K. 2:2
+  NBN:MN < Silhouette
+  Silhouette > J:TI
+Kuba M. vs Mikolaj K. 3:1
+  NBN:MN > Noise
+  Silhouette > GRNDL
+
+2014-05-22:
+Mateusz N. vs David C. 2:2
+  Ken < GRNDL
+  NBN:MN > Reina
+David C. vs Maciej C. 2:2
+  Reina < HB:EtF
+  GRNDL > Silhouette
+Pawel R. vs Jan S. 2:2
+  J:PE > Gabe
+  Reina < NBN:MN
+Pawel R. vs Mateusz K. 2:2
+  J:PE < Andy
+  Reina > NBN:MN
+
+2014-05-28:
+Mateusz K. vs Mateusz N. 2:2
+  NBN:MN < Ken
+  Andy > NBN:MN
+Sebastian Z. vs Pawel R. 2:2
+  Reina > NBN:TWiY
+  NBN:TWiY < Reina
+Jan S. vs Maciej C. 2:2
+  Noise < NBN:MN
+  J:TI > Kate
+Jan S. vs Marek T. 1:3
+  J:TI < Kate
+  Noise < HB:EtF
+Pawel R. vs Maciej C. 3:1
+  Reina > NBN:MN
+  NBN:TWiY > Kate
+David C. vs Sebastian S. 3:1
+  NBN:MN > Andy
+  Reina > J:HM
+
+
+2014-06-05:
+Jan S. vs Sebastian S. 3:1
+  Noise > GRNDL
+  J:TI > Andy
+David C. vs Kuba M. 2:1
+  Reina > NBN:MN
+  J:PE = Andy (time)
+Pawel R. vs Mateusz N. 2:2
+  Reina > NBN:MN
+  NBN:TWiY < Ken
+Jan S. vs Kuba M. 2:2
+  J:TI < Andy
+  Noise > NBN:MN
+Maciej C. vs Mateusz K.  2:2 (regionalsy)
+  J:RP < Andy
+  Reina > NBN:MN
+
+2014-06-11:
+Mateusz N. vs Dawid S. 2:2
+Sebastian Z. vs Mateusz K. 2:2
+  NBN:TWiY > Andy
+  Reina < NBN:MN
+Maciej C. vs Sebastian S. 3:1
+  J:RP > Andy
+  CT > J:PE
+Pawel R. vs Marek T. 1:3
+  NBN:TWiY < Kate
+  Kate < HB:EtF
+Michal R. vs Marek T. 2:2
+  Reina > HB:EtF
+  HB:EtF < Kate
+David C. vs Sebastian S. 2:2
+  J:PE > Andy
+  Silhouette < J:PE
+Pawel R. vs Maciej C. 2:2
+  NBN:TWiY > CT
+  Kate < J:RP
+Pawel R. vs Michal R. 2:2
+  NBN:TWiY > Reina
+  Kate < HB:EtF
+Sebastian Z. vs Sebastian S. 2:2
+  NBN:TWiY > Andy
+  CT < J:PE
+Sebastian Z. vs Kuba M. 1:3
+  HB:CI < Andy
+  CT < NBN:MN
+Pawel R. vs Sebastian Z. 2:2
+  NBN:TWiY > CT
+  Whizzard < HB:CI
+
+2014-06-17:
+Jan S. vs Mikolaj K. 3:1
+  Silhouette > J:PE
+  NBN:MN > Noise
+Jan S. vs Sebastian S. 3:1
+  Silhouette > J:PE
+  NBN:MN > Kit
+Pawel R. vs Mikolaj K. 3:1
+  J:PE > Noise
+  Kate > J:PE
+Marek T. vs Sebastian S. 2:2
+  NBN:MN > Kit
+  Kate < J:PE
+Mikolaj K. vs Maciej C. 1:3
+  Noise < J:RP
+  J:PE < Silhouette
+Michal R. vs Maciej C. 2:2
+  HB:EtF > CT
+  Kit < NBN:MN
+Michal R. vs Pawel R. 1:3
+  Kit < J:PE
+  HB:EtF < Kate
+Michal R. vs Sebastian S. 2:2
+  HB:EtF > Kit
+  Kit < J:PE
+Michal R. vs Jan S. 2:2
+  HB:EtF > Silhouette
+  Kit < HB:EtF
+
+2014-06-25:
+Maciej C. vs Mateusz N. 3:1
+  J:RP > Reina
+  Iain > HB:EtF
+Jan S. vs Mikolaj K. 3:1
+  Silhouette > J:PE
+  HB:EtF > Noise
+Jan S. vs Sebastian Z. 3:1
+  Gabe > W:BaBW
+  HB:EtF > Gabe
+Jan S. vs Sebastian Z. 3:1
+  Silhouette > W:BWBI
+  NBN:MN > Gabe
+Marek T. vs Sebastian S. 2:2
+  Kate < J:PE
+  HB:EtF > Kit
+Marek T. vs Dawid S. 2:2
+  Kate < HB:EtF
+  HB:EtF > Gabe
+Marek T. vs Mikolaj K. 2:2
+  Kate > J:PE
+  HB:EtF < Noise
+Marek T. vs Mikolaj K. 2:1 (time)
+  Kate > J:PE
+Sebastian S. vs Michal R. 2:2
+  Kit < HB:EtF
+  J:PE > Kit
+Maciej C. vs Sebastian Z. 2:1 (time)
+  J:RP > Gabe
+Michal R. vs Dawid S. 2:2
+  HB:EtF > Gabe
+  Kit < HB:EtF
+Michal R. vs Mateusz N. 1:2
+  Kit < HB:EtF
