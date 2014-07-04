@@ -58,25 +58,44 @@
     (insta/parser
       (str
        "days = day*
-       day = date <':'> <eol>? duel+
+       day = date <':'> <eol>? duels
+       duels = duel+
        date = #'\\d{4}-\\d{2}-\\d{2}'
-       duel = players <w> score <w> (comments)? <w> games
+       duel = players <w> score <w> <(comments)?> <w> games
        players = player <w> <'vs'> <w> player
        score = digit <':'> digit
        games = ((game) | (game game))? <eol>?
-       game = (<w> runner-id <w> result <w> corp-id | <w> corp-id <w> result <w> runner-id <w>) <w> (comments)?
-       result = '>'|'<'|'='
-       runner-id = "runners"
-       corp-id = "corps"
-       player = "players"
-       comments = '(' #'[a-zA-Z0-9: ]'+ ')' w eol
+       game = (<w> runner-id <w> result <w> corp-id | <w> corp-id <w> result <w> runner-id <w>) <w> <(comments)?>
+       <result> = '>'|'<'|'='
+       <runner-id> = "runners"
+       <corp-id> = "corps"
+       <player> = "players"
+       comments = '(' #'[a-zA-Z0-9: ]'+ ')' <w> <eol>
        digit = #'\\d'
        w = #'\\s'*
        eol = #'\\n'
       "))))
 
 
-(parser (slurp "resources/data.txt"))
+(defn parse [data]
+  (insta/transform
+       {:days list
+        :day list
+        :date str
+        :players list
+        :games list
+        :game list
+        :duels list
+        :duel (fn [players scores games]
+                  (conj games
+                        (->> (interleave players scores)
+                             (partition 2))))
+        :score list
+        :digit read-string}
+     (parser data)))
+
+(clojure.pprint/pprint (parse (slurp "resources/data.txt")))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
