@@ -1,0 +1,22 @@
+2014-03-19:
+Marek T. vs Kuba M.       3:1
+Dawid S. vs Maciej C.     2:2
+
+2014-04-30:
+Mikolaj K. vs Sebastian Z. 1:3
+  GRNDL < CT
+  Noise < HB:CI
+David C. vs Sebastian Z. 2:2
+  NBN:MN > CT
+  Whizzard < HB:CI
+David C. vs Maciej C. 2:2
+  NBN:MN > Reina
+  Whizzard < HB:CI
+
+2014-05-08:
+David C. vs Jan S. 2:2
+  NBN:TWiY > Kate
+  Kit < NBN:MN
+Jan S. vs Maciej C. 2:2
+  NBN:MN > Ken
+  Kate < HB:CI

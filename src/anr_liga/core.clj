@@ -96,8 +96,43 @@
 
 (clojure.pprint/pprint (parse (slurp "resources/data.txt")))
 
-(defn -main
-  "I don't do a whole lot ... yet."
-  [& args]
-  (println "Hello, World!"))
+(def data (parse (slurp "resources/data-short.txt")))
 
+(defn nodes [tree]
+  (tree-seq sequential? identity tree))
+
+(defn result? [node]
+  (and (seq? node)
+       (= 2 (count node))
+       (string? (first node))
+       (integer? (last node))))
+
+(defn duel? [node]
+  (and (seq? node)
+       (= 2 (count node))
+       (result? (first node))
+       (result? (last node))))
+
+(defn result-nodes [data]
+  (filter result? (nodes data)))
+
+(defn sum-results [results]
+  (->> results
+       flatten
+       (filter integer?)
+       (apply +)))
+
+(defn player-total-scores [data]
+  "map of player -> score, ex {'joe' 3, 'bob' 6}"
+  (->> (result-nodes data)
+       (group-by first)
+       (map-map-values sum-results)))
+
+(defn generate-score-table [data]
+  (->> (reverse (sort-by last (player-total-scores data)))
+       (map cons (iterate inc 1))
+       (map (partial apply format "%2d. | %-15s | %2d\n"))
+       s/join))
+
+(generate-score-table data)
+(spit "table.txt" (generate-score-table data))
