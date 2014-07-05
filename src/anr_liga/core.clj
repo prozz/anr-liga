@@ -116,23 +116,50 @@
 (defn result-nodes [data]
   (filter result? (nodes data)))
 
-(defn sum-results [results]
-  (->> results
-       flatten
-       (filter integer?)
-       (apply +)))
+(defn duel-nodes [data]
+  (filter duel? (nodes data)))
 
 (defn player-total-scores [data]
-  "map of player -> score, ex {'joe' 3, 'bob' 6}"
-  (->> (result-nodes data)
-       (group-by first)
-       (map-map-values sum-results)))
+  "map: player -> score, ex. {'joe' 3, 'bob' 6}"
+  (letfn [(sum-results [results] (->> results flatten (filter integer?) (apply +)))]
+    (->> (result-nodes data)
+         (group-by first)
+         (map-values sum-results))))
 
 (defn generate-score-table [data]
-  (->> (reverse (sort-by last (player-total-scores data)))
+  "txt version of score table"
+  (->> (player-total-scores data)
+       (sort-by last)
+       reverse
        (map cons (iterate inc 1))
        (map (partial apply format "%2d. | %-15s | %2d\n"))
        s/join))
 
+(defn normalize-match-result [match]
+  "note: result is sorted, ex: (('joe' 3) ('bob' 1)) -> (('bob' 'joe') (1 3))"
+  (let [[names scores] (map list (first match) (last match))]
+    (if (= names (sort names))
+      (list names scores)
+      (list (reverse names) (reverse scores)))))
+
+(defn match-results [data]
+  (->> (duel-nodes data)
+       (map normalize-match-result)
+       (group-by first)
+       (map-values (partial map last))))
+
+(match-results data)
+
+(defn invalid-matches [results]
+  "no more than max games between 2 players"
+  (filter (comp (partial < max-games) count last) results))
+
+(invalid-matches (match-results data))
+
+(defn generate-match-table [data]
+  TODO)
+
 (generate-score-table data)
 (spit "table.txt" (generate-score-table data))
+
+
