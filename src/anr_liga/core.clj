@@ -151,13 +151,20 @@
 (match-results data)
 
 (defn invalid-matches [results]
-  "no more than max games between 2 players"
+  "no more than max-games between 2 players"
   (filter (comp (partial < max-games) count last) results))
 
 (invalid-matches (match-results data))
 
 (defn generate-match-table [data]
-  TODO)
+  (let [r (match-results data)]
+    (for [p1 allowed-players
+          p2 allowed-players]
+      (r (list p1 p2)))))
+
+(match-results data)
+allowed-players
+(generate-match-table data)
 
 (generate-score-table data)
 (spit "table.txt" (generate-score-table data))
