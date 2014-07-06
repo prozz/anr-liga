@@ -205,9 +205,11 @@
 (defn accumulated-scores-by-date [data]
   (accumulate + (scores-by-date data)))
 
+(def scores-header (str "date," (s/join "," allowed-players)))
+
 (def data-file "resources/data-short.txt")
 (def data (parse (slurp data-file)))
 (spit "scores.txt" (scores-table-str data))
 (spit "duels.txt" (duels-matrix-str data))
-(spit "scores-by-date.csv" (map->csv (scores-by-date data)))
-(spit "accumulated-scores-by-date.csv" (map->csv (accumulated-scores-by-date data)))
+(spit "scores-by-date.csv" (map->csv (scores-by-date data) scores-header))
+(spit "accumulated-scores-by-date.csv" (map->csv (accumulated-scores-by-date data) scores-header))

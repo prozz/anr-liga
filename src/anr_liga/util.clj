@@ -32,11 +32,13 @@
             v (map f s (r fk))]
         (recur (rest k) v (assoc r fk v))))))
 
-(defn map->csv [m]
+(defn map->csv
   "takes map of lists, ex: {'joe' (1 2 3), ...}"
-  (->> m
-       (map-values (partial s/join ","))
-       a->z
-       (map (partial s/join ","))
-       (interpose "\n")
-       s/join))
+  ([m]
+    (->> m
+         (map-values (partial s/join ","))
+         a->z
+         (map (partial s/join ","))
+         (interpose "\n")
+         s/join))
+  ([m header] (str header "\n" (map->csv m))))
