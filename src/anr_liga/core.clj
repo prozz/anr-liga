@@ -4,11 +4,14 @@
             [clojure.string :as s])
   (:gen-class))
 
+(def a->z sort)
+(def z->a (comp reverse sort))
+
 (def data-file "resources/data-short.txt")
 
 (def max-duels 2)
 
-(def allowed-players (sort
+(def allowed-players (a->z
      ["Mateusz K."
       "Pawel R."
       "Marek T."
@@ -149,9 +152,6 @@
       (list names scores)
       (list (reverse names) (reverse scores)))))
 
-(def a->z sort)
-(def z->a (comp reverse sort))
-
 (defn duel-scores
   ([data]
      (duel-scores data a->z))
@@ -196,20 +196,30 @@
 
 (def starting-scores (zipmap allowed-players (repeat 0)))
 
-(sort-by first
-  (map-values (comp (partial str "\n")
-                    (partial s/join ",")
-                    (partial map last)
-                    a->z
-                    (partial merge starting-scores)
-                    total-score-by-player
-                    score-nodes) (group-by first data)))
+(defn with-starting-scores [data]
+  (->> (score-nodes data)
+       total-score-by-player
+       (merge starting-scores)
+       a->z))
 
+(defn scores-by-date [data]
+  (->> (group-by first data)
+       (map-values with-starting-scores)))
 
-(scores-table data)
-(score-nodes data)
-(group-by first data)
+(defn line-chart-csv [data]
+  (->> (scores-by-date data)
+       (map-values (partial map last))
+       (map-values (partial s/join ","))
+       a->z
+       (map (partial s/join ","))
+       (spit-rows "line-chart.csv")
+       )
+  )
+
+(line-chart-csv data)
+
+(scores-by-date data)
+
 (def data (parse (slurp data-file)))
-
 (spit "scores.txt" (generate-scores-table data))
 (spit "duels.txt" (generate-duels-table data))

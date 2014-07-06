@@ -8,7 +8,12 @@
   "apply f to each value in map m"
   (zipmap (keys m) (map f (vals m))))
 
+(defn spit-rows
+  ([file rows] (write-rows file, rows, "\n"))
+  ([file rows separator] (spit file (s/join separator rows))))
+
 (defn center [width s]
+  "ex: (center 5 'x') -> '  x  '"
   (let [len (count s)
         right (quot (- width len) 2)
         left (- width (+ len right))
