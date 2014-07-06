@@ -131,14 +131,15 @@
   (map-values count (scores-by-player data)))
 
 (defn scores-table [data]
+  "name, no. of games, points total. ex. (['joe' (1 3)], ...)"
   (let [scores (total-score-by-player data)
         duel-count (duel-count-by-player data)
         table (merge-with list duel-count scores)]
     (reverse (sort-by (comp last last) table))))
 
-(defn generate-scores-table [data]
+(defn scores-table-str [data]
   (->> (scores-table data)
-       (map cons (iterate inc 1))
+       (map cons (iterate inc 1)) ; adds ordering
        (map flatten)
        (map (partial apply format "%2d. | %-15s | %2d | %2d\n"))
        s/join
@@ -152,9 +153,9 @@
       (list names scores)
       (list (reverse names) (reverse scores)))))
 
-(defn duel-scores
+(defn scores-by-duel
   ([data]
-     (duel-scores data a->z))
+     (scores-by-duel data a->z))
   ([data order]
      (->> (duel-nodes data)
          (map (partial duel->duel-score order))
@@ -163,11 +164,12 @@
 
 (defn invalid-duels [data]
   "no more than max-duels between 2 players"
-  (filter (comp (partial < max-duels) count last) (duel-scores data)))
+  (filter (comp (partial < max-duels) count last) (scores-by-duel data)))
 
-(defn duels-table [data]
-  (let [ds1 (duel-scores data a->z)
-        ds2 (duel-scores data z->a)
+(defn duels-matrix [data]
+  ""
+  (let [ds1 (scores-by-duel data a->z)
+        ds2 (scores-by-duel data z->a)
         ds (merge ds1 ds2)]
     (partition (count allowed-players)
       (for [p1 allowed-players p2 allowed-players]
@@ -175,10 +177,7 @@
           :na
           (ds (list p1 p2)))))))
 
-
-(def width 14)
-
-(defn generate-duels-table [data]
+(defn duels-matrix-str [data]
   (let [width 14
         players (map (partial center width) allowed-players)
         header (str (center width "X") "|" (s/join "|" players) "\n")]
@@ -188,23 +187,23 @@
                                                 (= :na c) "X"
                                                 :else     (s/join "," (map format-result c)))))
             (format-row    [r] (str "|" (s/join "|" (map format-cell r)) "\n"))]
-      (->> (duels-table data)
+      (->> (duels-matrix data)
            (map format-row)
            (map str players)
            s/join
            (str header)))))
 
-(def starting-scores (zipmap allowed-players (repeat 0)))
+(def initial-scores (zipmap allowed-players (repeat 0)))
 
-(defn with-starting-scores [data]
+(defn include-all-players [data]
   (->> (score-nodes data)
        total-score-by-player
-       (merge starting-scores)
+       (merge initial-scores)
        a->z))
 
 (defn scores-by-date [data]
   (->> (group-by first data)
-       (map-values with-starting-scores)))
+       (map-values include-all-players)))
 
 (defn line-chart-csv [data]
   (->> (scores-by-date data)
@@ -221,5 +220,5 @@
 (scores-by-date data)
 
 (def data (parse (slurp data-file)))
-(spit "scores.txt" (generate-scores-table data))
-(spit "duels.txt" (generate-duels-table data))
+(spit "scores.txt" (scores-table-str data))
+(spit "duels.txt" (duels-matrix-str data))
