@@ -202,20 +202,32 @@
 
 (defn scores-by-date [data]
   (->> (group-by first data)
-       (map-values fill-players)))
+       (map-values fill-players)
+       (map-values (partial map last))))
 
-(defn scores-by-date-csv [data]
-  (->> (scores-by-date data)
-       (map-values (partial map last))
+(defn accumulated-scores-by-date [data]
+  (let [m (scores-by-date data)]
+    (loop [dates (keys m)
+           scores (take (count (first (vals m)))(repeat 0))
+           result m]
+      (if (empty? dates)
+        result
+        (let [d (first dates)
+              w (map + scores (result d))]
+          (recur (rest dates) w (assoc result d w)))))))
+(scores-by-date data)
+(accumulated-scores-by-date data)
+
+(defn scores-map->csv [scores]
+  (->> scores
        (map-values (partial s/join ","))
        a->z
        (map (partial s/join ","))
        (interpose "\n")
-       s/join
-       ))
+       s/join))
 
-(def data-file "resources/data.txt")
+(def data-file "resources/data-short.txt")
 (def data (parse (slurp data-file)))
 (spit "scores.txt" (scores-table-str data))
 (spit "duels.txt" (duels-matrix-str data))
-(spit "scores-by-date.csv" (scores-by-date-csv data))
+(spit "scores-by-date.csv" (scores-map->csv (scores-by-date data)))
