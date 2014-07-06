@@ -195,7 +195,8 @@
 
 (def initial-scores (zipmap allowed-players (repeat 0)))
 
-(defn include-all-players [data]
+(defn fill-players [data]
+  "fills score-nodes with for omitted players"
   (->> (score-nodes data)
        total-score-by-player
        (merge initial-scores)
@@ -203,22 +204,19 @@
 
 (defn scores-by-date [data]
   (->> (group-by first data)
-       (map-values include-all-players)))
+       (map-values fill-players)))
 
-(defn line-chart-csv [data]
+(defn scores-by-date-csv [data]
   (->> (scores-by-date data)
        (map-values (partial map last))
        (map-values (partial s/join ","))
        a->z
        (map (partial s/join ","))
-       (spit-rows "line-chart.csv")
-       )
-  )
-
-(line-chart-csv data)
-
-(scores-by-date data)
+       (interpose "\n")
+       s/join
+       ))
 
 (def data (parse (slurp data-file)))
 (spit "scores.txt" (scores-table-str data))
 (spit "duels.txt" (duels-matrix-str data))
+(spit "scores-by-date.csv" (scores-by-date-csv data))
