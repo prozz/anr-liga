@@ -4,9 +4,6 @@
             [clojure.string :as s])
   (:gen-class))
 
-(def a->z sort)
-(def z->a (comp reverse sort))
-
 (def max-duels 2)
 
 (def allowed-players (a->z
@@ -194,7 +191,7 @@
 (def initial-scores (zipmap allowed-players (repeat 0)))
 
 (defn fill-players [data]
-  "fills score-nodes with for omitted players"
+  "fills score-nodes with omitted players"
   (->> (score-nodes data)
        total-score-by-player
        (merge initial-scores)
@@ -206,28 +203,11 @@
        (map-values (partial map last))))
 
 (defn accumulated-scores-by-date [data]
-  (let [m (scores-by-date data)]
-    (loop [dates (keys m)
-           scores (take (count (first (vals m)))(repeat 0))
-           result m]
-      (if (empty? dates)
-        result
-        (let [d (first dates)
-              w (map + scores (result d))]
-          (recur (rest dates) w (assoc result d w)))))))
-(scores-by-date data)
-(accumulated-scores-by-date data)
-
-(defn scores-map->csv [scores]
-  (->> scores
-       (map-values (partial s/join ","))
-       a->z
-       (map (partial s/join ","))
-       (interpose "\n")
-       s/join))
+  (accumulate + (scores-by-date data)))
 
 (def data-file "resources/data-short.txt")
 (def data (parse (slurp data-file)))
 (spit "scores.txt" (scores-table-str data))
 (spit "duels.txt" (duels-matrix-str data))
-(spit "scores-by-date.csv" (scores-map->csv (scores-by-date data)))
+(spit "scores-by-date.csv" (map->csv (scores-by-date data)))
+(spit "accumulated-scores-by-date.csv" (map->csv (accumulated-scores-by-date data)))
