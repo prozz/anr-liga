@@ -1,0 +1,14 @@
+       X      |   David C.   |   Dawid S.   |    Jan S.    |    Kuba M.   |   Maciej C.  |   Marek T.   |  Mateusz K.  |  Mateusz N.  |   Michal R.  |  Mikolaj K.  |   Pawel R.   | Sebastian S. | Sebastian Z. 
+   David C.   |       X      |       -      |      2:2     |       -      |      2:2     |       -      |       -      |       -      |       -      |       -      |       -      |       -      |      2:2     
+   Dawid S.   |       -      |       X      |       -      |       -      |    2:2,2:1   |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      
+    Jan S.    |      2:2     |       -      |       X      |       -      |      2:2     |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      
+    Kuba M.   |       -      |       -      |       -      |       X      |       -      |      1:3     |       -      |       -      |       -      |       -      |       -      |       -      |       -      
+   Maciej C.  |      2:2     |    2:2,1:2   |      2:2     |       -      |       X      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      
+   Marek T.   |       -      |       -      |       -      |      3:1     |       -      |       X      |       -      |       -      |       -      |       -      |       -      |       -      |       -      
+  Mateusz K.  |       -      |       -      |       -      |       -      |       -      |       -      |       X      |       -      |       -      |       -      |       -      |       -      |       -      
+  Mateusz N.  |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       X      |       -      |       -      |       -      |       -      |       -      
+   Michal R.  |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       X      |       -      |       -      |       -      |       -      
+  Mikolaj K.  |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       X      |       -      |       -      |      1:3     
+   Pawel R.   |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       X      |       -      |       -      
+ Sebastian S. |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       X      |       -      
+ Sebastian Z. |      2:2     |       -      |       -      |       -      |       -      |       -      |       -      |       -      |       -      |      3:1     |       -      |       -      |       X      
