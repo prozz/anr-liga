@@ -4,9 +4,11 @@
             [clojure.string :as s])
   (:gen-class))
 
-(def max-games 2)
+(def data-file "resources/data.txt")
 
-(def allowed-players
+(def max-duels 2)
+
+(def allowed-players (sort
      ["Mateusz K."
       "Pawel R."
       "Marek T."
@@ -19,7 +21,7 @@
       "Michal R."
       "Sebastian S."
       "Dawid S."
-      "Mikolaj K."])
+      "Mikolaj K."]))
 
 (def allowed-runner-ids
      ["Gabe"
@@ -76,7 +78,6 @@
        eol = #'\\n'
       "))))
 
-
 (defn parse [data]
   (insta/transform
        {:days list
@@ -93,10 +94,6 @@
         :score list
         :digit read-string}
      (parser data)))
-
-(clojure.pprint/pprint (parse (slurp "resources/data.txt")))
-
-(def data (parse (slurp "resources/data-short.txt")))
 
 (defn nodes [tree]
   (tree-seq sequential? identity tree))
@@ -136,8 +133,7 @@
         table (merge-with list duel-count scores)]
     (reverse (sort-by (comp last last) table))))
 
-(defn generate-score-table [data]
-  "txt version of score table"
+(defn generate-scores-table [data]
   (->> (scores-table data)
        (map cons (iterate inc 1))
        (map flatten)
@@ -146,43 +142,56 @@
        (str "some header\n")))
 
 
-
-
-(defn normalize-match-result [match]
+(defn duel->duel-score [match]
   "note: result is sorted, ex: (('joe' 3) ('bob' 1)) -> (('bob' 'joe') (1 3))"
   (let [[names scores] (map list (first match) (last match))]
     (if (= names (sort names))
       (list names scores)
       (list (reverse names) (reverse scores)))))
 
-(defn match-results [data]
+(defn a->z sort)
+(defn z->a (comp reverse sort))
+
+(defn duel-scores [data]
   (->> (duel-nodes data)
-       (map normalize-match-result)
+       (map duel->duel-score)
        (group-by first)
        (map-values (partial map last))))
 
-(match-results data)
+(duel-scores data)
+(defn invalid-duels [data]
+  "no more than max-duels between 2 players"
+  (filter (comp (partial < max-duels) count last) (duel-scores data)))
 
-(defn invalid-matches [results]
-  "no more than max-games between 2 players"
-  (filter (comp (partial < max-games) count last) results))
+(duel-scores data)
 
-(invalid-matches (match-results data))
-
-(defn generate-match-table [data]
-  (let [r (match-results data)]
-    (for [p1 allowed-players
-          p2 allowed-players]
-      (let [x (r (list p1 p2))]
-        (if (nil? x)
-          (list p1 p2)
-          x)))))
-
-allowed-players
-(match-results data)
-(generate-match-table data)
-
-(generate-score-table data)
-(spit "table.txt" (generate-score-table data))
+(defn duels-table [data]
+  (let [ds (duel-scores data)]
+    (partition (count allowed-players)
+      (for [p1 allowed-players p2 allowed-players]
+        (if (= p1 p2)
+          :na
+          (ds (list p1 p2)))))))
 
 
+(def width 14)
+
+(defn generate-duels-table [data]
+  (letfn [(format-result [r] (str (first r) ":" (last r)))
+          (format-cell   [c] (center width (cond
+                                              (nil? c)  "-"
+                                              (= :na c) "X"
+                                              :else     (s/join "," (map format-result c)))))
+          (format-row    [r] (str "|" (s/join "|" (map format-cell r)) "\n"))]
+    (let [players (map (partial center width) allowed-players)
+          header (str (center width "X") "|" (s/join "|" players) "\n")]
+      (->> (duels-table data)
+           (map format-row)
+           (map str players)
+           s/join
+           (str header)))))
+
+(def data (parse (slurp data-file)))
+
+(spit "scores.txt" (generate-score-table data))
+(spit "duels.txt" (generate-duels-table data))
