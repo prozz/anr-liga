@@ -4,7 +4,7 @@
             [clojure.string :as s])
   (:gen-class))
 
-(def data-file "resources/data.txt")
+(def data-file "resources/data-short.txt")
 
 (def max-duels 2)
 
@@ -179,20 +179,36 @@
 (def width 14)
 
 (defn generate-duels-table [data]
-  (letfn [(format-result [r] (str (first r) ":" (last r)))
-          (format-cell   [c] (center width (cond
-                                              (nil? c)  "-"
-                                              (= :na c) "X"
-                                              :else     (s/join "," (map format-result c)))))
-          (format-row    [r] (str "|" (s/join "|" (map format-cell r)) "\n"))]
-    (let [players (map (partial center width) allowed-players)
-          header (str (center width "X") "|" (s/join "|" players) "\n")]
+  (let [width 14
+        players (map (partial center width) allowed-players)
+        header (str (center width "X") "|" (s/join "|" players) "\n")]
+    (letfn [(format-result [r] (str (first r) ":" (last r)))
+            (format-cell   [c] (center width (cond
+                                                (nil? c)  "-"
+                                                (= :na c) "X"
+                                                :else     (s/join "," (map format-result c)))))
+            (format-row    [r] (str "|" (s/join "|" (map format-cell r)) "\n"))]
       (->> (duels-table data)
            (map format-row)
            (map str players)
            s/join
            (str header)))))
 
+(def starting-scores (zipmap allowed-players (repeat 0)))
+
+(sort-by first
+  (map-values (comp (partial str "\n")
+                    (partial s/join ",")
+                    (partial map last)
+                    a->z
+                    (partial merge starting-scores)
+                    total-score-by-player
+                    score-nodes) (group-by first data)))
+
+
+(scores-table data)
+(score-nodes data)
+(group-by first data)
 (def data (parse (slurp data-file)))
 
 (spit "scores.txt" (generate-scores-table data))
