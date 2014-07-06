@@ -101,39 +101,52 @@
 (defn nodes [tree]
   (tree-seq sequential? identity tree))
 
-(defn result? [node]
+(defn score? [node]
+  "ex: ('joe' 3)"
   (and (seq? node)
        (= 2 (count node))
        (string? (first node))
        (integer? (last node))))
 
 (defn duel? [node]
+  "ex: (('joe' 3) ('bob' 1))"
   (and (seq? node)
        (= 2 (count node))
-       (result? (first node))
-       (result? (last node))))
+       (score? (first node))
+       (score? (last node))))
 
-(defn result-nodes [data]
-  (filter result? (nodes data)))
+(defn score-nodes [data]
+  (filter score? (nodes data)))
 
 (defn duel-nodes [data]
   (filter duel? (nodes data)))
 
-(defn player-total-scores [data]
-  "map: player -> score, ex. {'joe' 3, 'bob' 6}"
-  (letfn [(sum-results [results] (->> results flatten (filter integer?) (apply +)))]
-    (->> (result-nodes data)
-         (group-by first)
-         (map-values sum-results))))
+(defn scores-by-player [data]
+  (map-values (partial map last) (group-by first (score-nodes data))))
+
+(defn total-score-by-player [data]
+  (map-values (partial apply +) (scores-by-player data)))
+
+(defn duel-count-by-player [data]
+  (map-values count (scores-by-player data)))
+
+(defn scores-table [data]
+  (let [scores (total-score-by-player data)
+        duel-count (duel-count-by-player data)
+        table (merge-with list duel-count scores)]
+    (reverse (sort-by (comp last last) table))))
 
 (defn generate-score-table [data]
   "txt version of score table"
-  (->> (player-total-scores data)
-       (sort-by last)
-       reverse
+  (->> (scores-table data)
        (map cons (iterate inc 1))
-       (map (partial apply format "%2d. | %-15s | %2d\n"))
-       s/join))
+       (map flatten)
+       (map (partial apply format "%2d. | %-15s | %2d | %2d\n"))
+       s/join
+       (str "some header\n")))
+
+
+
 
 (defn normalize-match-result [match]
   "note: result is sorted, ex: (('joe' 3) ('bob' 1)) -> (('bob' 'joe') (1 3))"
@@ -160,10 +173,13 @@
   (let [r (match-results data)]
     (for [p1 allowed-players
           p2 allowed-players]
-      (r (list p1 p2)))))
+      (let [x (r (list p1 p2))]
+        (if (nil? x)
+          (list p1 p2)
+          x)))))
 
-(match-results data)
 allowed-players
+(match-results data)
 (generate-match-table data)
 
 (generate-score-table data)
