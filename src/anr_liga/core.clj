@@ -7,8 +7,6 @@
 (def a->z sort)
 (def z->a (comp reverse sort))
 
-(def data-file "resources/data-short.txt")
-
 (def max-duels 2)
 
 (def allowed-players (a->z
@@ -216,6 +214,7 @@
        s/join
        ))
 
+(def data-file "resources/data.txt")
 (def data (parse (slurp data-file)))
 (spit "scores.txt" (scores-table-str data))
 (spit "duels.txt" (duels-matrix-str data))
