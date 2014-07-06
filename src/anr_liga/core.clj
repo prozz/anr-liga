@@ -139,34 +139,36 @@
        (map flatten)
        (map (partial apply format "%2d. | %-15s | %2d | %2d\n"))
        s/join
-       (str "some header\n")))
+       (str "    |" (center 17 "gracze") "| m. | p.\n"
+            "----+-----------------+----+----\n")))
 
-
-(defn duel->duel-score [match]
+(defn duel->duel-score [order duel]
   "note: result is sorted, ex: (('joe' 3) ('bob' 1)) -> (('bob' 'joe') (1 3))"
-  (let [[names scores] (map list (first match) (last match))]
-    (if (= names (sort names))
+  (let [[names scores] (map list (first duel) (last duel))]
+    (if (= names (order names))
       (list names scores)
       (list (reverse names) (reverse scores)))))
 
-(defn a->z sort)
-(defn z->a (comp reverse sort))
+(def a->z sort)
+(def z->a (comp reverse sort))
 
-(defn duel-scores [data]
-  (->> (duel-nodes data)
-       (map duel->duel-score)
-       (group-by first)
-       (map-values (partial map last))))
+(defn duel-scores
+  ([data]
+     (duel-scores data a->z))
+  ([data order]
+     (->> (duel-nodes data)
+         (map (partial duel->duel-score order))
+         (group-by first)
+         (map-values (partial map last)))))
 
-(duel-scores data)
 (defn invalid-duels [data]
   "no more than max-duels between 2 players"
   (filter (comp (partial < max-duels) count last) (duel-scores data)))
 
-(duel-scores data)
-
 (defn duels-table [data]
-  (let [ds (duel-scores data)]
+  (let [ds1 (duel-scores data a->z)
+        ds2 (duel-scores data z->a)
+        ds (merge ds1 ds2)]
     (partition (count allowed-players)
       (for [p1 allowed-players p2 allowed-players]
         (if (= p1 p2)
@@ -193,5 +195,5 @@
 
 (def data (parse (slurp data-file)))
 
-(spit "scores.txt" (generate-score-table data))
+(spit "scores.txt" (generate-scores-table data))
 (spit "duels.txt" (generate-duels-table data))
