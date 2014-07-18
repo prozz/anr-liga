@@ -1,0 +1,15 @@
+    |      gracze     | m. | p.
+----+-----------------+----+----
+ 1. | Mateusz K.      | 22 | 56
+ 2. | Pawel R.        | 24 | 55
+ 3. | Marek T.        | 24 | 53
+ 4. | Jan S.          | 23 | 52
+ 5. | Maciej C.       | 23 | 46
+ 6. | Mateusz N.      | 22 | 46
+ 7. | David C.        | 22 | 43
+ 8. | Kuba M.         | 20 | 36
+ 9. | Sebastian Z.    | 20 | 34
+10. | Michal R.       | 17 | 27
+11. | Sebastian S.    | 18 | 24
+12. | Dawid S.        | 14 | 23
+13. | Mikolaj K.      | 13 | 16
