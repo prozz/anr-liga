@@ -19,39 +19,52 @@ body {
 
 .line {
   fill: none;
-  stroke: steelblue;
-  stroke-width: 1.5px;
 }
 
+    .voronoi path {
+  fill: none;
+    stroke: red;
+        stroke-opacity: .1
+  pointer-events: all;
+}
+
+.focus text {
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, 0 -1px 0 #fff, -1px 0 0 #fff;
+}
 </style>
 <body>
 <script src="http://d3js.org/d3.v3.js"></script>
 <script>
 
 var margin = {top: 20, right: 80, bottom: 30, left: 50},
-    width = 960 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = 900 - margin.left - margin.right,
+    height = 700 - margin.top - margin.bottom;
 
 var parseDate = d3.time.format("%Y-%m-%d").parse;
 
-var x = d3.time.scale()
-    .range([0, width]);
-
-var y = d3.scale.linear()
-    .range([height, 0]);
-
+var x = d3.time.scale().range([0, width]);
+var y = d3.scale.linear().range([height, 0]);
 var color = d3.scale.category10();
 
+var xAxis = d3.svg.axis()
+              .scale(x)
+              .orient("bottom");
+
+var yAxis = d3.svg.axis()
+              .scale(y)
+              .orient("left");
+
 var line = d3.svg.line()
-    .interpolate("basis")
-    .x(function(d) { return x(d.date); })
-    .y(function(d) { return y(d.score); });
+             .interpolate("linear")
+             .x(function(d) { return x(d.date); })
+             .y(function(d) { return y(d.score); });
 
 var svg = d3.select("body").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 d3.csv("accumulated-scores-by-date.csv", function(error, data) {
   color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
@@ -70,19 +83,7 @@ d3.csv("accumulated-scores-by-date.csv", function(error, data) {
   });
 
   x.domain(d3.extent(data, function(d) { return d.date; }));
-
-  y.domain([
-    d3.min(players, function(c) { return d3.min(c.values, function(v) { return v.score; }); }),
-    d3.max(players, function(c) { return d3.max(c.values, function(v) { return v.score; }); })
-  ]);
-
-  var xAxis = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-  var yAxis = d3.svg.axis()
-    .scale(y)
-    .orient("left");
+  y.domain([0, d3.max(players, function(c) { return d3.max(c.values, function(v) { return v.score; }); })]);
 
   svg.append("g")
       .attr("class", "x axis")
@@ -92,29 +93,75 @@ d3.csv("accumulated-scores-by-date.csv", function(error, data) {
   svg.append("g")
       .attr("class", "y axis")
       .call(yAxis)
-    .append("text")
-      .attr("transform", "rotate(-90)")
-      .attr("y", 6)
-      .attr("dy", ".71em")
-      .style("text-anchor", "end")
-      .text("Scores");
+
+    var focus = svg.append("g")
+                 .attr("transform", "translate(-100,-100)")
+                 .attr("class", "focus");
+
+  focus.append("circle")
+      .attr("r", 3.5);
+
+  focus.append("text")
+      .attr("y", -10);
+
+    var voronoi = d3.geom.voronoi()
+    .x(function(d) { return x(d.date); })
+    .y(function(d) { return y(d.score); })
+    .clipExtent([[-margin.left, -margin.top], [width + margin.right, height + margin.bottom]]);
+
+    var voronoiGroup = svg.append("g")
+      .attr("class", "voronoi")
+    ;
+
+  voronoiGroup.selectAll("path")
+      .data(voronoi(d3.nest()
+          .key(function(d) { return x(d.date) + "," + y(d.score); })
+          .rollup(function(v) { return v[0]; })
+          .entries(d3.merge(players.map(function(d) { return d.values; })))
+          .map(function(d) { return d.values; })))
+    .enter().append("path")
+      .attr("d", function(d) { return "M" + d.join("L") + "Z"; })
+      .datum(function(d) { return d.point; })
+      .on("mouseover", function(d){
+              console.log(d);
+              d3.select(".line[player='" + d.name + "']").style("stroke-width", "3")
+
+//          alert(JSON.stringify(d));
+//              d3.select(d.player.line).classed("city--hover", true);
+//                d.player.line.parentNode.appendChild(d.player.line);
+//                      d3.select(this).style("stroke-width", "3");
+//                focus.attr("transform", "translate(" + x(d.date) + "," + y(d.score) + ")");
+//                focus.select("text").text("d.player");
+      })
+      //.on("mouseout", mouseout)
+      ;
 
   var player = svg.selectAll(".player")
-      .data(players)
-    .enter().append("g")
-      .attr("class", "player");
+                  .data(players)
+                  .enter()
+                  .append("g")
+                  .attr("class", "player");
+
 
   player.append("path")
-      .attr("class", "line")
-      .attr("d", function(d) { return line(d.values); })
-      .style("stroke", function(d) { return color(d.name); });
+        .attr("class", "line")
+        .attr("d", function(d) { return line(d.values); })
+        .attr("stroke-width", '1px')
+        .style("stroke", function(d) { return color(d.name); })
+        .attr("player", function(d) { return d.name;})
+        .on('mouseover', function(d) {
+            d3.select(this).style("stroke-width", "3");
+        })
+        .on('mouseout', function(d) {
+            d3.select(this).style("stroke-width", "1");
+        });
 
   player.append("text")
-      .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
-      .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.score) + ")"; })
-      .attr("x", 3)
-      .attr("dy", ".35em")
-      .text(function(d) { return d.name; });
+        .datum(function(d) { return {name: d.name, value: d.values[d.values.length - 1]}; })
+        .attr("transform", function(d) { return "translate(" + x(d.value.date) + "," + y(d.value.score) + ")"; })
+        .attr("x", 3)
+        .attr("dy", ".35em")
+        .text(function(d) { return d.name; });
 });
 
 </script>
